@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Country URL Redirect</title>
+  </head>
+  <body>
+    <h1>Welcome!</h1>
+    <p>You will be redirected to your country URL shortly...</p>
+
+    <script>
+      function getUserCountry() {
+        // Get the user's GMT offset
+        let gmtOffset = -(new Date().getTimezoneOffset() / 60);
+
+        // Define URLs for different GMT offsets
+        let urls = {
+          "+6": "https://www.bangladesh.com",
+          "-5": "https://www.example.com/gb",
+          "+1": "https://www.example.com/fr",
+          // Add more GMT offset URLs as needed
+        };
+
+        // Check if user's GMT offset has a corresponding URL
+        for (let offset in urls) {
+          if (gmtOffset >= parseInt(offset) - 1 && gmtOffset <= parseInt(offset) + 1) {
+            window.location.replace(urls[offset]);
+            return;
+          }
+        }
+
+        // If no matching GMT offset, redirect to default URL
+        window.location.replace("https://www.example.com/default");
+      }
+
+      // Call the getUserCountry function on page load
+      window.onload = getUserCountry;
+    </script>
+  </body>
+</html>
